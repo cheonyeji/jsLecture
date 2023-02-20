@@ -63,4 +63,4 @@ let tmp2 = null; // null : 변수에 저장된 데이터를 비울 때! (의도O
 // ! typeof null -> object (객체) (null이라는 이름의 자료형XXXXXX)
 
 // 변수 선언 시 주의사항
-let $num1, _num2, num3;
+let $num1, _num2, num3; // 숫자로 시작하는것X
