@@ -1,3 +1,4 @@
+/*
 // 문자열 String : 문자형 데이터를 객체로 취급!
 
 // 문자열 객체 생성
@@ -120,5 +121,184 @@ console.log(location.host); // 호스트(서버주소) & 포트번호 반환
 // navigator : 현재 사용자가 사용하는 브라우저 정보, 운영체제의 정보
 navigator.language;
 console.log(navigator.onLine); // 유저가 온라인 여부 반환(boolean)
-
+*/
 // 3. 문서 객체 모델 (DOM) : HTML 문서 구조 -> jQuery
+
+// 함수 : js 코드의 묶음. function 키워드를 사용하거나, arrow 함수 형태
+// 데이터를 전달받아 사용할 수 있으며, 실행 결과를 반환할 수도 있다!
+
+// 호이스팅 (hoisting) : "물건을 끌어올린다" 사전적 정의
+// 함수를 정의하기 전에, 먼저 호출을 해도 문제 X
+//console.log(sayHi1());
+//sayHi2();
+//sayHi3();
+
+// 1. 함수 정의 방법
+function sayHi1() {
+  let name = "yeji";
+  console.log("Hi~~1");
+  return name;
+}
+
+// 2. 익명 함수
+var sayHi2 = function () {
+  console.log("Hi~~2");
+};
+
+// 3. es6에서 등장한 화살표 함수
+// arguments 객체 생성 XXXXXXX
+const sayHi3 = () => {
+  console.log("Hi~~3");
+};
+
+// 4. Function 생성자 : 안 좋음. 알고는 있되 쓰지 말자!!!
+//const sayHi4 = new Function('name', 'console.log("Hi~~")');
+
+// 매개변수 : 함수를 실행하기 위해 필요한 값을
+// 함수 외부에서 내부로 전달하기 위해 사용!
+
+// 매개변수 parameter -> 함수를 정의할 때 선언. 함수 내부에서 변수처럼 사용.
+// 인수 arguments -> 함수를 호출할 때 지정. 개수, 타입에 제한X
+
+// 함수 선언문. 인자를 덜 전달받으면 알아서 0으로 값을 넣어주고 있다!
+function add(x, y) {
+  x = x || 0;
+  y = y || 0;
+
+  console.log(x, y); // 전달받은 값이 없다면 undefined. 있으면 그 값으로!
+
+  //   console.log(arguments);
+  return x + y;
+}
+
+// 함수 호출
+// console.log(add(1,2));
+
+// JS에서의 함수!! -> 매개변수의 개수 <-> 인수의 개수 일치하는 체크 X
+
+// 인수가 부족(덜 전달) -> 함수 내부에서는 부족한 데이터는 undefined 처리.
+console.log(add(1));
+
+// 매개변수의 기본값을 사용 (ES6)
+// 기본값 : 매개변수에 인수 전달X or undefined일때만 적용
+function add2(x = 0, y = 0) {
+  console.log(x, y); // 전달받은 값이 없다면 undefined. 있으면 그 값으로!
+
+  //console.log(arguments);
+  return x + y;
+}
+
+add2(1, 2);
+
+// 매개변수는 최대 3개를 넘지 말자~ 만약 넘는다면 객체를 통해 전달하자! :)
+// 함수 내부에서 전달받은 객체 값을 수정 -> 함수 외부의 원본 객체도 영향!
+const student = {
+  name: "yeji",
+  age: 20,
+  height: 158,
+  score: 100,
+};
+
+function printStudent(student) {
+  student.name = "cheon yeji";
+  console.log(student.name);
+}
+printStudent(student);
+
+// 인수가 과함(더 전달) -> 무시 (버려지지 않고, arguments 객체에 저장)
+// console.log(add(1, 2, 3));
+
+// 화살표 함수 조금 더 자세히! - Rest
+
+// 화살표 함수 정의
+// return이 생략된 상태!
+const multiply = (x, y) => x * y;
+
+// 만약 매개변수가 1개인 경우, 괄호 생략 가능
+// 함수의 몸체가 1줄인 경우, {} 생략 가능
+const func1 = (x) => console.log(x);
+
+// 만약 매개변수가 없으면, 괄호 반드시 적어줘야 함!
+const func2 = () => {};
+
+// 객체를 반환하는 경우 반드시 ()로 감싸주자
+// () -> {return ____}와 동일
+// const errorFunc3 = (id, pw) => { id, pw };
+const func3 = (id, pw) => ({ id, pw });
+console.log(func3("yeji", "1111"));
+
+// 화살표 함수 vs 일반 함수
+// 1. 중복된 매개변수 이름 선언 여부
+function f1(a, a) {
+  return a + a;
+}
+// 화살표 함수는 중복된 매개변수 이름 허용X
+// const arrowF1 = (a, a) => a + a;
+
+// 화살표 함수는 this, arguments, super 사용 불가
+// this : 자기 자신 (객체 본인)
+// super : 부모 (객체가 상속받는 부모 객체)
+
+// arguments를 사용할 수 없다? -> 가변 인자가 불가능? -> XXXX
+// 화살표 함수 : <Rest 파라미터> 방식을 사용
+// Rest 파라미터 : 함수에 전달된 인수들을 "배열"로 전달받는 방법
+// rest는 반드시 마지막 요소. 단 1개만 사용 가능.
+function f2(...params) {
+  // console.log(params);
+  // argments 써서 하는 방법 (배열로 변환 후 배열 메서드 사용)
+  // return Array.from(arguments).filter((data) => data >= 5);
+
+  // ES6부터 등장한 Rest요소를 사용하여 바로 배열 메서드 사용
+  return params.filter((data) => data >= 5);
+}
+console.log(f2(1, 2, 3, 4, 5, 6, 7));
+
+// ES6에서 도입! 스프레드(spread) 문법 -> "..."
+// 하나로 뭉쳐져 있는 여러 값의 집합을 펼쳐서 개별적인 값의 목록으로 만듦!
+// spread 사용 가능 대상 : Array, String, DOM 컬렉션, arguments 등등등
+// for...of 사용 가능한, 순회할 수 있는 이터러블에서 사용 가능~~
+
+console.log(...[1, 2, 3]);
+console.log(..."goodbye~~");
+// console.log(...{ name: "yeji", age: 20 }); (객체는 for...of 반복문X)
+
+// 스프레드 문법의 결과는 값이 아니다!
+// const list = ...[1,2,3];
+
+// 1. 함수 호출 시 인수에서 사용하는 경우
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 22, 1, 3, 4, 53, 5, 3, 3, 3, 5, 25];
+console.log(Math.max(numbers)); // NaN (숫자가 아닌 값이 넘어와서 판단X)
+console.log(Math.max(...numbers));
+
+// ~ ES5
+// var maxNum = Math.max.apply(null, numbers);
+
+// 2. 배열 내부에서 사용하는 경우
+// concat 대신
+console.log([1, 2].concat([3, 4])); // ~ ES5
+const arr = [...[1, 2], ...[3, 4]]; // ES6 ~
+console.log(arr);
+
+// splice를 좀더 잘 쓰기 위해!
+// splice : 어떤 배열의 중간에 다른 배열의 요소를 추가하거나 제거하기 위해 사용
+// 원본 건드림~
+const arr1 = [1, 4];
+const arr2 = [2, 3];
+
+// [1,2,3,4]를 만들자!
+// arr1.splice(1, 0, arr2); // [1,[2,3],4]
+arr1.splice(1, 0, ...arr2); // [1,2,3,4]
+
+// 배열의 복사를 위해 slice를 사용했음 (ES5)
+// (동일한 값을 갖는, 완전히 새로운 배열을 생성하는 것)
+const origin = [10, 20];
+const copy = origin.slice();
+
+const trendCopy = [...origin]; // ES6
+
+// 객체 내부에서 사용하는 경우
+const obj1 = { x: 1, y: 2 };
+const copyObj1 = { ...obj1 };
+
+const oldMerged = Object.assign({}, { x: 1, y: 2 }, { a: 3, b: 4 }); // ES5
+const merged = { x: 1, y: 2, ...{ a: 3, b: 4 } }; // ES6
