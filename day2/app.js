@@ -69,7 +69,56 @@ const str2 = "       hello      ";
 console.log(str2.trim());
 
 // 2. 브라우저 객체 모델 (BOM)
-// window, screen, location, history, navigator ....
-// window.location.href = "https://www.naver.com";
+// window : 가장 최상위 객체
+// document, screen, location, history, navigator
 
-// 3. 문서 객체 모델 (DOM) : HTML 문서 구조
+// window 객체의 메서드 종류
+// URL 전달받은 페이지를 새 창에 표시!
+// window.open(
+//   "https://www.naver.com/",
+//   "naver",
+//   "width=500, heigth=500, left=50, top=50, scrollbars=no"
+// );
+
+// alert() : 메세지를 표시하는 경고창. 확인을 눌러야 다음 코드 진행
+// alert("로그인을 먼저 해주세요!");
+
+// prompt("전달할메세지"[,"기본값"]) -> 문자열 데이터 반환
+// const userInput = prompt("여러분의 이름은?", "디지텍고등학교 학생");
+
+// confirm("전달할 메세지") -> boolean 데이터 반환
+// const userConfirm = confirm("둘중에 하나만 골라 yes or yes");
+
+// setInterval(함수, 시간) : 계속해서 일정 시간 간격으로 함수를 호출
+// setTimeout(함수, 시간) : 단 한번! 일정 시간이 흐른 후 함수를 호출
+function sayHello() {
+  console.log("안녕하세요!");
+}
+// 전달하는 요소는 함수의 이름!!!! (괄호를 붙이면 XXX)
+const sayHelloOneSec = setInterval(sayHello, 1000);
+
+// clear~ 를 통해 함수 제거 가능
+clearInterval(sayHelloOneSec);
+
+// screen : 사용자의 모니터 정보(pc, 핸드폰, 태블릿)
+console.log(screen.width);
+console.log(screen.height);
+
+// location : 브라우저와 관련된! 현재 URL에 대한 정보, 새로고침 메서드를 제공
+console.log(location.href); // 현재 접속 중인 URL
+console.log(location.host); // 호스트(서버주소) & 포트번호 반환
+// location.reload(); // 새로고침. 이렇게 적어주면 무한 새로고침되니 주의!
+
+// location.href 지정하여 화면 이동 가능
+// location.href = "https://www.naver.com";
+
+// history : 사용자가 방문한 사이트의 기록. 이전 방문, 다음 방문 한번씩 제어 가능.
+// history.length : 방문 기록에 저장된 목록 개수
+// history.back(); // 이전 방문 사이트로 이동 (만약X, 이동안함)
+// history.forward(); // 다음 방문 사이트로 이동 (만약X, 이동안함)
+
+// navigator : 현재 사용자가 사용하는 브라우저 정보, 운영체제의 정보
+navigator.language;
+console.log(navigator.onLine); // 유저가 온라인 여부 반환(boolean)
+
+// 3. 문서 객체 모델 (DOM) : HTML 문서 구조 -> jQuery
