@@ -127,3 +127,38 @@ $.merge(areas, countries);
 // $("요소").index("찾고자하는데이터")
 const idxNum = $("#menu2 li").index($("#target"));
 console.log(idxNum);
+
+//////// 속성 탐색 선택자 /////////
+// 선택한 요소를 기준으로 일치하는 속성 여부를 체크.
+// ex. img 태그 중 src 속성값이 "images/sample.jpg"인거 체크
+
+// $("요소[속성]") : 요소 중 속성 값이 포함한 요소만 가져옴
+console.log($("li[title]"));
+
+// $("요소[속성='조건']") : 요소 중 속성 값&조건까지 일치하는 요소만 가져옴
+console.log($("li[title='content']"));
+
+// $("요소[속성^='조건']") : 요소 중 속성값이 조건으로 시작하는 요소만 가져옴
+console.log($("a[href^='http://']"));
+
+// $("요소[속성$='조건']") : 요소 중 속성값이 조건으로 끝나는 요소만 가져옴
+console.log($("a[href$='com']"));
+
+// $("요소[속성*='조건']") : 요소 중 속성값이 조건을 포함하는 요소만 가져옴
+console.log($("a[href*='naver']"));
+
+// 속성 & 상태
+// $("요소:visible")
+// $("요소:hidden") : 화면에 표시X 상태의 요소를 가져옴 (ex. display:none)
+// $("ul:hidden").css({ display: "block", color: "red" });
+
+// $("요소:selected")
+// $("요소:checked")
+
+// 선택한 요소의 하위 요소 중 상태값 일치하는 데이터의 value 가져옴
+console.log($("#selectWrapper :selected").val());
+console.log($("#checkboxWrapper :checked").val());
+
+// is(":상태") : 선택한 요소의 상태가 지정한 속성과 일치하면 true / 아니면 false
+// checkbox에 선택 여부 / 보이는지 여부 등을 알아볼 때 주로 사용
+console.log($("#menu2").is(":hidden"));
