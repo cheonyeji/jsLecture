@@ -1,5 +1,7 @@
 import express from "express";
 import path from "path";
+import fs from "fs"; // node.js에서 제공하는 fileSystem
+
 const app = express();
 
 // express에게 알려줘야 함!
@@ -33,6 +35,21 @@ app.post("/login", function (req, res) {
   const responseData = {};
   responseData.email = email;
   res.json(responseData);
+});
+
+app.get("/showList", function (req, res) {
+  res.sendFile(__dirname + "/public/showList.html");
+});
+
+app.get("/database", function (req, res) {
+  // public/data/MOCK_DATA.json파일을 res로 전달
+  // local 환경에 있는 json파일을 동기적으로 읽어온 뒤 ~ (코드가 위에서부터 아래로 실행되는 것을 보장)
+  // fs.readFile() : 비동기 처리로 인해 실행순서를 보장X
+  const data = JSON.parse(
+    fs.readFileSync("./public/data/MOCK_DATA.json", "utf8")
+  );
+
+  res.json(data);
 });
 
 app.listen(3000, function () {
